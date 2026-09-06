@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FIX$PLAN — Renovation estimates in minutes</title>
+<meta name="description" content="Fast renovation cost estimator for contractors. 76 works, 32 countries, 14 languages. Estimate, invoice, PDF — 100% offline.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --amber:#FFC107; --amber-d:#C8960A; --bg:#0A0A0A; --card:#141414;
+    --text:#EDEDED; --dim:#9a9a9a; --line:#242424;
+    --tape:repeating-linear-gradient(-45deg,var(--amber) 0 18px,#0A0A0A 18px 36px);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font:16px/1.6 'Inter',-apple-system,sans-serif}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  a{color:var(--amber);text-decoration:none}
+
+  /* ---- nav ---- */
+  nav{border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:66px}
+  .brand{font-family:'Archivo Black',sans-serif;font-size:21px;letter-spacing:.5px;color:var(--text)}
+  .brand b{color:var(--amber);font-weight:400;font-family:inherit}
+  .nav-links{display:flex;gap:22px;font-size:14px;font-weight:600}
+  .nav-links a{color:var(--dim)} .nav-links a:hover{color:var(--amber)}
+
+  /* ---- hero ---- */
+  .hero{padding:84px 0 70px;position:relative;overflow:hidden}
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+  .eyebrow{display:inline-block;background:var(--amber);color:#0A0A0A;font-weight:800;font-size:12px;
+    letter-spacing:1.5px;text-transform:uppercase;padding:6px 12px;margin-bottom:22px}
+  h1{font-family:'Archivo Black',sans-serif;font-size:clamp(38px,6vw,62px);line-height:1.04;margin-bottom:20px}
+  h1 em{font-style:normal;color:var(--amber)}
+  .hero p{color:var(--dim);font-size:18px;max-width:46ch;margin-bottom:32px}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:15px 26px;font-weight:800;font-size:16px;
+    background:var(--amber);color:#0A0A0A;border:none;cursor:pointer;transition:transform .12s}
+  .btn:hover{transform:translateY(-2px)}
+  .btn.ghost{background:transparent;color:var(--text);border:1.5px solid var(--line)}
+  .btn.ghost:hover{border-color:var(--amber);color:var(--amber)}
+  .cta-note{color:var(--dim);font-size:13px;width:100%}
+
+  /* estimate mock — the signature visual, pure CSS */
+  .mock{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;
+    box-shadow:0 30px 80px rgba(0,0,0,.55);transform:rotate(1.5deg)}
+  .mock-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+  .mock-title{font-family:'Archivo Black',sans-serif;font-size:15px;letter-spacing:1px}
+  .mock-badge{background:var(--amber);color:#0A0A0A;font-size:11px;font-weight:800;padding:3px 9px}
+  .mock-row{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px dashed var(--line);font-size:14px}
+  .mock-row span:first-child{color:var(--dim)}
+  .mock-row b{font-weight:600}
+  .mock-total{display:flex;justify-content:space-between;padding-top:16px;font-family:'Archivo Black',sans-serif;font-size:19px}
+  .mock-total span:last-child{color:var(--amber)}
+
+  /* hazard tape divider — brand signature */
+  .tape{height:14px;background:var(--tape)}
+
+  /* ---- stats strip ---- */
+  .stats{background:var(--amber);color:#0A0A0A}
+  .stats-in{display:grid;grid-template-columns:repeat(4,1fr);text-align:center}
+  .stat{padding:28px 10px}
+  .stat b{display:block;font-family:'Archivo Black',sans-serif;font-size:34px;line-height:1}
+  .stat span{font-size:13px;font-weight:600;opacity:.75}
+  .stat + .stat{border-left:1.5px solid rgba(10,10,10,.18)}
+
+  /* ---- features ---- */
+  section{padding:78px 0}
+  .sec-label{font-family:'Archivo Black',sans-serif;font-size:clamp(26px,4vw,38px);margin-bottom:44px}
+  .sec-label em{font-style:normal;color:var(--amber)}
+  .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .feat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:24px 22px;transition:border-color .15s}
+  .feat:hover{border-color:var(--amber-d)}
+  .feat-ico{font-size:26px;margin-bottom:14px}
+  .feat h3{font-size:16px;font-weight:800;margin-bottom:8px}
+  .feat p{color:var(--dim);font-size:14px}
+
+  /* ---- steps ---- */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .step{border-top:4px solid var(--amber);padding-top:18px}
+  .step b{display:block;font-family:'Archivo Black',sans-serif;font-size:15px;margin-bottom:8px}
+  .step p{color:var(--dim);font-size:14px}
+
+  /* ---- privacy band ---- */
+  .privacy-band{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:34px 32px;
+    display:flex;gap:26px;align-items:center;flex-wrap:wrap}
+  .privacy-band .lock{font-size:40px}
+  .privacy-band h3{font-family:'Archivo Black',sans-serif;font-size:20px;margin-bottom:6px}
+  .privacy-band p{color:var(--dim);font-size:15px;max-width:64ch}
+
+  /* ---- footer ---- */
+  footer{border-top:1px solid var(--line);padding:36px 0 44px;font-size:14px;color:var(--dim)}
+  .foot-in{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+  .foot-links{display:flex;gap:20px}
+
+  @media(max-width:860px){
+    .hero-grid{grid-template-columns:1fr}
+    .mock{transform:none;max-width:420px}
+    .stats-in{grid-template-columns:repeat(2,1fr)}
+    .stat:nth-child(3){border-left:none}
+    .stat:nth-child(1),.stat:nth-child(2){border-bottom:1.5px solid rgba(10,10,10,.18)}
+    .feat-grid,.steps{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:560px){
+    .feat-grid,.steps{grid-template-columns:1fr}
+    .nav-links{gap:14px}
+  }
+  @media (prefers-reduced-motion: reduce){ .btn:hover{transform:none} }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-in">
+    <div class="brand">FIX<b>$</b>PLAN</div>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">For contractors &amp; handymen</span>
+      <h1>Renovation estimates <em>in minutes</em>, not evenings</h1>
+      <p>Enter room dimensions, tick the works — get a client-ready estimate with materials, tools and an invoice. Fully offline, in 14 languages.</p>
+      <div class="cta-row">
+        <a class="btn" href="#" aria-label="Get FIX$PLAN on Google Play">▶ Get it on Google Play</a>
+        <a class="btn ghost" href="#how">See how it works</a>
+        <span class="cta-note">24-hour free trial · no account · no ads</span>
+      </div>
+    </div>
+    <div class="mock" aria-hidden="true">
+      <div class="mock-head">
+        <span class="mock-title">ESTIMATE · KITCHEN</span>
+        <span class="mock-badge">12.4 m²</span>
+      </div>
+      <div class="mock-row"><span>Wall plastering</span><b>34.6 m² · 2 422 zł</b></div>
+      <div class="mock-row"><span>Floor screed</span><b>12.4 m² · 868 zł</b></div>
+      <div class="mock-row"><span>Tile laying</span><b>12.4 m² · 4 340 zł</b></div>
+      <div class="mock-row"><span>Electrical points</span><b>8 pcs · 800 zł</b></div>
+      <div class="mock-row"><span>Painting, 2 coats</span><b>34.6 m² · 1 730 zł</b></div>
+      <div class="mock-total"><span>TOTAL</span><span>10 160 zł</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="tape" role="presentation"></div>
+
+<div class="stats">
+  <div class="wrap stats-in">
+    <div class="stat"><b>76</b><span>renovation works</span></div>
+    <div class="stat"><b>32</b><span>countries with prices</span></div>
+    <div class="stat"><b>14</b><span>languages</span></div>
+    <div class="stat"><b>100%</b><span>offline</span></div>
+  </div>
+</div>
+
+<section id="features">
+  <div class="wrap">
+    <h2 class="sec-label">Everything a contractor needs. <em>Nothing else.</em></h2>
+    <div class="feat-grid">
+      <div class="feat"><div class="feat-ico">📐</div><h3>Auto area calculation</h3><p>Enter length, width and height — floor, walls and ceiling areas are calculated for you.</p></div>
+      <div class="feat"><div class="feat-ico">💰</div><h3>Your prices, your rules</h3><p>Start with country averages for 32 countries, then tap any price to set your own rate.</p></div>
+      <div class="feat"><div class="feat-ico">🧱</div><h3>Materials list</h3><p>Quantities of plaster, tiles, paint and more — generated automatically from selected works.</p></div>
+      <div class="feat"><div class="feat-ico">🔧</div><h3>Tools checklist</h3><p>Know exactly what to load in the van. Check off items as you pack.</p></div>
+      <div class="feat"><div class="feat-ico">🧾</div><h3>Invoice generator</h3><p>Company details, tax ID, IBAN, due date — a proper invoice in your client's language.</p></div>
+      <div class="feat"><div class="feat-ico">📄</div><h3>PDF &amp; export</h3><p>Send the estimate by email, copy as text or save as PDF. VAT, discount, down payment included.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="tape" role="presentation"></div>
+
+<section id="how">
+  <div class="wrap">
+    <h2 class="sec-label">From door to <em>done deal</em> in 4 steps</h2>
+    <div class="steps">
+      <div class="step"><b>1 · Measure</b><p>Add rooms and enter basic dimensions on site.</p></div>
+      <div class="step"><b>2 · Select works</b><p>Pick from 76 works grouped by category — demolition to finishing.</p></div>
+      <div class="step"><b>3 · Adjust</b><p>Tune prices to your rates. Add VAT, discount or contingency.</p></div>
+      <div class="step"><b>4 · Send</b><p>Export the estimate or invoice and hand it to the client on the spot.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="privacy-band">
+      <div class="lock">🔒</div>
+      <div>
+        <h3>Your data never leaves your phone</h3>
+        <p>No account, no cloud, no analytics, no ads. Every estimate, price and client detail is stored only on your device. <a href="privacy.html">Read the privacy policy →</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="tape" role="presentation"></div>
+
+<footer>
+  <div class="wrap foot-in">
+    <span>© 2026 FIX$PLAN · <a href="mailto:fixsplan@gmail.com">fixsplan@gmail.com</a></span>
+    <span class="foot-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>
